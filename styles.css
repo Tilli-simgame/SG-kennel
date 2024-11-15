@@ -1,0 +1,545 @@
+/* Base styles */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: black;
+}
+
+/* Mobile Navigation - Hidden by default */
+.mobile-nav {
+  display: none;
+}
+
+.mobile-nav .menu-icon {
+  margin-right: 8px;
+  font-size: 1.2em;
+}
+
+.mobile-clock {
+  font-size: 0.9em;
+  padding-left: 15px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Windows XP Interface */
+.viewport-container {
+  width: 1024px;
+  height: 800px;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.desktop {
+  width: 1024px;
+  height: 800px;
+  min-height: 800px;
+  position: relative;
+  overflow: hidden;
+  background: #3a6ea5;
+}
+
+/* Folder View Styles */
+.folder-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 16px;
+  padding: 10px;
+}
+
+.folder-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.folder-item:hover {
+  background-color: rgba(0, 0, 255, 0.1);
+}
+
+.folder-item:active {
+  background-color: rgba(0, 0, 255, 0.2);
+}
+
+.folder-icon {
+  font-size: 32px;
+  margin-bottom: 4px;
+}
+
+.folder-item.selected {
+  background-color: rgba(0, 0, 255, 0.1);
+  outline: 1px solid #0066cc;
+}
+
+/* Taskbar */
+.taskbar {
+  background: linear-gradient(
+    to bottom,
+    #1f48a1 0%,
+    #245edb 3%,
+    #3474f3 6%,
+    #0954ec 10%,
+    #0046e2 12%,
+    #0040dd 15%,
+    #0040dd 16%,
+    #003bd7 18%,
+    #003bd7 20%,
+    #0039d5 25%,
+    #0036d0 35%,
+    #0034cd 40%,
+    #0031c7 45%,
+    #002ec0 50%,
+    #002abc 55%,
+    #0029bb 60%,
+    #0027b7 65%,
+    #0024b3 70%,
+    #0020ac 75%,
+    #001ca5 80%,
+    #00189e 85%,
+    #001698 90%,
+    #001492 95%,
+    #00128c 100%
+  );
+  border-bottom: 1px solid #0831d9;
+  padding: 2px;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  min-height: 30px;
+}
+
+/* Start Button */
+.start-button {
+  background: linear-gradient(
+    to bottom,
+    #5aa855 0%,
+    #4a9946 3%,
+    #3f8c3c 6%,
+    #297a25 10%,
+    #1c7117 16%,
+    #156912 20%,
+    #146411 25%,
+    #115b0e 35%,
+    #0f550c 45%,
+    #0c4c0a 55%,
+    #0a4608 65%,
+    #094207 75%,
+    #073a06 85%,
+    #063505 95%,
+    #053004 100%
+  );
+  color: white;
+  border: 1px solid #3b7a38;
+  border-radius: 3px;
+  padding: 4px 12px 4px 8px;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+  height: 26px;
+  display: flex;
+  align-items: center;
+}
+
+.start-button:hover {
+  background: linear-gradient(to bottom, #60b35a, #52a74e);
+}
+
+/* Start Menu */
+.start-menu {
+  min-width: 220px;
+  padding: 8px 0;
+  margin-top: 4px;
+  border: 1px solid #2b579a;
+  border-radius: 3px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  background: white;
+}
+
+.dropdown-item-header {
+  padding: 8px 16px;
+  background-color: #245edb;
+  color: white;
+  font-weight: bold;
+}
+
+.dropdown-item {
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dropdown-item:hover {
+  background-color: #245edb;
+  color: white;
+}
+
+.menu-icon {
+  font-size: 1.2em;
+  width: 24px;
+  text-align: center;
+}
+
+/* Taskbar Windows Area */
+.active-windows {
+  display: flex;
+  gap: 4px;
+  padding-left: 6px;
+}
+
+/* Window Button in Taskbar */
+.window-button {
+  background: linear-gradient(to bottom, #3e91fd, #2272e9);
+  border: 1px solid #1f50b1;
+  border-radius: 2px;
+  color: white;
+  padding: 2px 8px;
+  min-width: 120px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+}
+
+.window-button:hover {
+  background: linear-gradient(to bottom, #4aa1ff, #2982f9);
+}
+
+.window-button.active {
+  background: linear-gradient(to bottom, #3272dc, #2461c9);
+  border-color: #1941a5;
+}
+
+.window-button:active {
+  transform: translateY(1px);
+}
+
+.window-icon {
+  font-size: 14px;
+}
+
+/* System Tray */
+.system-tray {
+  background: linear-gradient(to bottom, #1f50b1, #2461c9);
+  border-left: 1px solid #1f50b1;
+  padding: 0 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.clock {
+  color: white;
+  font-size: 11px;
+  padding: 2px 4px;
+}
+
+/* Window Styles */
+.custom-card {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  max-width: 700px; /* Updated default width */
+  margin: 0;
+  background: #fff;
+  border: 1px solid #2b579a;
+  border-radius: 3px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+  user-select: none;
+  overflow: hidden;
+  z-index: 1;
+  cursor: default;
+}
+
+.custom-card:active {
+  cursor: grabbing;
+}
+
+/* Window Header */
+.card-header {
+  background: linear-gradient(
+    to right,
+    #0058ee 0%,
+    #3f8cff 8%,
+    #2c7fff 15%,
+    #0063ff 23%,
+    #0060ff 38%,
+    #1e6cff 54%,
+    #0050ee 77%,
+    #0050ee 92%,
+    #004eee 100%
+  );
+  padding: 3px 5px 3px 10px;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.card-header span {
+  color: white;
+  font-weight: bold;
+  font-size: 13px;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+/* Window Controls */
+.title-controls {
+  display: flex;
+  gap: 2px;
+}
+
+.window-control {
+  width: 21px;
+  height: 21px;
+  min-width: 21px;
+  padding: 0;
+  border: 1px solid #fff;
+  border-radius: 3px;
+  background: linear-gradient(
+    to bottom,
+    #f1f3f6 0%,
+    #e5eaf3 50%,
+    #d4e0f3 50%,
+    #e5eaf3 100%
+  );
+  color: #000;
+  font-size: 14px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer !important;
+}
+
+.window-control:hover {
+  background: linear-gradient(
+    to bottom,
+    #ffa500 0%,
+    #ff8c00 50%,
+    #ff7400 50%,
+    #ff8c00 100%
+  );
+  border-color: #fff;
+  color: #fff;
+}
+
+.window-control:last-child:hover {
+  background: linear-gradient(
+    to bottom,
+    #ff4545 0%,
+    #ff2c2c 50%,
+    #ff1a1a 50%,
+    #ff2c2c 100%
+  );
+}
+
+/* Window Content */
+.card-body {
+  padding: 10px;
+  background: white; /* Changed for folder views */
+  overflow: auto;
+  flex: 1;
+  min-height: 0;
+  min-height: 200px; /* Minimum height for windows */
+}
+
+/* Welcome window specific */
+#window1 .card-body {
+  background: #ece9d8;
+}
+
+/* Window States */
+.custom-card[data-window-state="maximized"] {
+  max-width: none !important;
+  width: 1024px !important;
+  height: calc(800px - 30px) !important;
+  border-radius: 0 !important;
+  transform: none !important;
+}
+
+.custom-card[data-window-state="minimized"] {
+  display: none;
+  width: 600px;
+}
+
+/* Focus Effects */
+.custom-card:focus,
+.custom-card[style*="z-index: 2"] {
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Prevent text selection */
+.custom-card * {
+  user-select: none;
+}
+
+/* Add or update these styles in your CSS */
+/* styles.css */
+.dropend {
+  position: relative;
+}
+
+.dropend .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: 0;
+  margin-left: 1px;
+}
+
+.dropdown-menu {
+  min-width: 220px;
+  padding: 4px 0;
+  border: 1px solid #c3c3c3;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-item {
+  padding: 6px 12px;
+  color: #333;
+}
+
+.dropdown-item:hover {
+  background-color: #316ac5;
+  color: white;
+}
+
+.dropdown-item:hover .menu-icon {
+  filter: brightness(2);
+}
+
+.menu-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+}
+
+/* Ensure submenus stay open on hover */
+.dropend:hover > .dropdown-menu {
+  display: block;
+}
+
+.dropend:hover > .dropdown-item {
+  background-color: #316ac5;
+  color: white;
+}
+
+/* Style for the header */
+.dropdown-item-header {
+  padding: 8px 12px;
+  background: linear-gradient(to right, #0050e0, #3690ea);
+  color: white;
+  font-weight: bold;
+}
+
+/* Divider styling */
+.dropdown-divider {
+  margin: 4px 0;
+  border-color: #c3c3c3;
+}
+
+/* Start menu specific styles */
+.start-menu {
+  border: 2px solid #003c74;
+  padding: 2px 0;
+  margin-top: 2px;
+}
+
+/* Windows XP-style arrow for submenus */
+.dropdown-item .ms-2 {
+  font-size: 10px;
+  color: inherit;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 1024px), (max-height: 800px) {
+  body {
+    padding-top: 56px;
+    background: #f8f9fa;
+    display: block;
+    overflow-y: auto;
+  }
+
+  .mobile-nav {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+  }
+
+  .viewport-container {
+    display: none;
+  }
+
+  .navbar-nav .nav-link {
+    padding: 0.8rem 1rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+}
+
+/* Desktop view */
+@media (min-width: 1025px) and (min-height: 801px) {
+  .mobile-nav {
+    display: none;
+  }
+
+  .viewport-container {
+    display: block;
+  }
+}
+
+/* Dark mode support for mobile view */
+@media (prefers-color-scheme: dark) {
+  @media (max-width: 1024px), (max-height: 800px) {
+    body {
+      background: #212529;
+      color: #f8f9fa;
+    }
+
+    .card {
+      background-color: #2d3238;
+      border-color: #373d44;
+    }
+
+    .card-body {
+      color: #e9ecef;
+    }
+
+    .btn-secondary {
+      background-color: #495057;
+      border-color: #495057;
+      color: #fff;
+    }
+
+    .btn-secondary:hover {
+      background-color: #5c636a;
+      border-color: #565e64;
+    }
+  }
+}

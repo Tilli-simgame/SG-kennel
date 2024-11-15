@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bootstrap Example</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Mobile Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mobile-nav">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Win XP</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="mobile-my-documents">
+                <span class="menu-icon">📁</span> My Documents
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="mobile-my-computer">
+                <span class="menu-icon">💻</span> My Computer
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="mobile-my-pictures">
+                <span class="menu-icon">🖼️</span> My Pictures
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="mobile-my-music">
+                <span class="menu-icon">🎵</span> My Music
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="mobile-control-panel">
+                <span class="menu-icon">⚙️</span> Control Panel
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="navbar-text text-light mobile-clock">
+          <span id="mobile-clock"></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Windows XP Interface -->
+    <div class="viewport-container">
+      <div class="desktop">
+        <!-- Top Navigation Bar -->
+        <!-- Top Navigation Bar -->
+        <nav class="navbar navbar-expand-lg taskbar">
+          <div class="container-fluid px-1 d-flex justify-content-between">
+            <div class="d-flex align-items-center">
+              <div class="dropdown">
+                <button
+                  class="start-button"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Start
+                </button>
+                <ul class="dropdown-menu start-menu" id="start-menu">
+                  <!-- Menu will be generated dynamically -->
+                </ul>
+              </div>
+              <!-- Active Windows Area -->
+              <div class="active-windows ms-2" id="taskbar-windows">
+                <!-- Windows will be added here dynamically -->
+              </div>
+            </div>
+            <!-- System Tray -->
+            <div class="system-tray">
+              <span id="clock" class="clock"></span>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Window Manager Script -->
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
