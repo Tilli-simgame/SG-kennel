@@ -49,9 +49,47 @@ export const kennelStructure = {
         icon: "📁",
         type: "folder",
         children: {
-          adultDogs: { title: "Adult Dogs", icon: "📄", type: "file" },
-          puppies: { title: "Puppies", icon: "📄", type: "file" },
-          champions: { title: "Retired Champions", icon: "📄", type: "file" },
+          adultDogs: { 
+            title: "Adult Dogs", 
+            icon: "📁", 
+            type: "folder",
+            children: {
+              dogA: {
+                title: "Dog A",
+                icon: "📄",
+                type: "file"
+              },
+              dogB: {
+                title: "Dog B",
+                icon: "📄",
+                type: "file"
+              }
+              ,
+              dogC: {
+                title: "Dog C",
+                icon: "📄",
+                type: "file"
+              },
+              dogD: {
+                title: "Dog D",
+                icon: "📄",
+                type: "file"
+              },
+              dogE: {
+                title: "Dog E",
+                icon: "📄",
+                type: "file"
+              }
+              ,
+              dogF: {
+                title: "Dog F",
+                icon: "📄",
+                type: "file"
+              }
+            }
+          },
+          puppies: { title: "Puppies", icon: "📁", type: "file" },
+          champions: { title: "Retired Champions", icon: "📁", type: "file" },
         },
       },
       breedingProgram: {

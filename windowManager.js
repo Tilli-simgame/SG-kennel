@@ -1,56 +1,40 @@
 // windowManager.js
 import { kennelStructure, menuMap } from "./kennelStructure.js";
 import { router } from "./router.js";
-
-// Helper function to generate folder view HTML
-export function generateFolderView(items) {
-  return `
-    <div class="folder-view">
-      ${Object.entries(items)
-        .map(
-          ([key, item]) => `
-        <div class="folder-item" data-key="${key}" data-type="${item.type}">
-          <span class="folder-icon">${item.icon}</span>
-          ${item.title}
-        </div>
-      `
-        )
-        .join("")}
-    </div>
-  `;
-}
+import { getFolderWindowHTML, generateFolderView, setupFolderListeners } from "./folderWindow.js";
+import { getNotepadWindowHTML, generateNotepadContent, setupNotepadListeners } from "./notepadWindow.js";
 
 export class WindowManager {
   constructor(windowId, key, fullPath = null) {
     this.windowId = windowId;
-
+    
     // Handle menu mapping
-    const mappedKey = key.startsWith("my-") ? menuMap[key] : key;
+    const mappedKey = key.startsWith('my-') ? menuMap[key] : key;
     this.currentPath = fullPath || mappedKey;
-
+    
     // Register window with router
     router.registerWindow(this.currentPath, this);
-
+    
     // Update URL if this is a new window
     router.updateUrl(this.currentPath);
-
+    
     // Get item data from structure
     this.itemData = this.getItemFromPath(this.currentPath);
-
+    
     // Check if itemData exists
     if (!this.itemData) {
-      console.error("Invalid path:", this.currentPath);
+      console.error('Invalid path:', this.currentPath);
       this.itemData = {
-        title: "Invalid Location",
-        type: "folder",
-        icon: "📁",
-        children: {},
+        title: 'Invalid Location',
+        type: 'folder',
+        icon: '📁',
+        children: {}
       };
     }
-
+    
     // Create window with content
     this.createWindow(this.itemData.title, this.generateContent());
-
+    
     // Initialize window properties
     this.initializeWindow();
   }
@@ -66,7 +50,7 @@ export class WindowManager {
 
     // Store original dimensions and position
     this.originalDimensions = {
-      width: "400px",
+      width: "600px",
       height: "auto",
       top: "32px",
       left: "32px",
@@ -87,58 +71,56 @@ export class WindowManager {
 
   getItemFromPath(path) {
     if (!path) return null;
-
+    
     // Handle root level path
-    if (!path.includes(".")) {
+    if (!path.includes('.')) {
       return kennelStructure[path] || null;
     }
-
+    
     // Split the path into segments and filter out empty segments
-    const segments = path.split(".").filter((seg) => seg !== "");
+    const segments = path.split('.').filter(seg => seg !== '');
     let current = kennelStructure;
-
+    
     try {
       // Handle first segment (root level)
       current = current[segments[0]];
       if (!current) return null;
-
+      
       // Handle remaining segments
       for (let i = 1; i < segments.length; i++) {
-        if (segments[i] === "children") continue;
-
+        if (segments[i] === 'children') continue;
+        
         if (!current.children || !current.children[segments[i]]) {
           return null;
         }
         current = current.children[segments[i]];
       }
-
+      
       return current;
     } catch (error) {
-      console.error("Error traversing path:", path, error);
+      console.error('Error traversing path:', path, error);
       return null;
     }
   }
 
   generatePathFromStructure() {
-    if (!this.currentPath) return "";
-
+    if (!this.currentPath) return '';
+    
     // Split the path and filter out 'children'
-    const segments = this.currentPath
-      .split(".")
-      .filter((seg) => seg !== "children");
+    const segments = this.currentPath.split('.').filter(seg => seg !== 'children');
     const pathParts = [];
-    let currentPath = "";
-
+    let currentPath = '';
+    
     // Build path parts with accumulating paths
     for (let i = 0; i < segments.length; i++) {
       currentPath = currentPath ? `${currentPath}.${segments[i]}` : segments[i];
       const currentItem = this.getItemFromPath(currentPath);
-
+      
       if (currentItem) {
         pathParts.push({
           key: currentPath,
           title: currentItem.title,
-          icon: currentItem.icon,
+          icon: currentItem.icon
         });
       }
     }
@@ -166,31 +148,14 @@ export class WindowManager {
 
   createWindow(title, content) {
     const desktop = document.querySelector(".desktop");
-    const windowHTML = `
-      <div class="card custom-card" id="${
-        this.windowId
-      }" data-window-state="normal">
-        <div class="card-header d-flex justify-content-between align-items-center" id="${
-          this.windowId
-        }-header">
-          <span>${title}</span>
-          <div class="title-controls">
-            <button class="btn btn-sm window-control" data-action="minimize" title="Minimize">-</button>
-            <button class="btn btn-sm window-control" data-action="maximize" title="Maximize">□</button>
-            <button class="btn btn-sm window-control" data-action="close" title="Close">×</button>
-          </div>
-        </div>
-        <div class="address-bar d-flex align-items-center">
-          <span class="address-label">Address</span>
-          <div class="address-content">
-            ${this.generatePathFromStructure()}
-          </div>
-        </div>
-        <div class="card-body">
-          ${content}
-        </div>
-      </div>
-    `;
+    let windowHTML;
+
+    if (this.itemData.type === "file") {
+      windowHTML = getNotepadWindowHTML(this.windowId, title, content);
+    } else {
+      windowHTML = getFolderWindowHTML(this.windowId, title, this.generatePathFromStructure(), content);
+    }
+
     desktop.insertAdjacentHTML("beforeend", windowHTML);
   }
 
@@ -213,12 +178,13 @@ export class WindowManager {
 
     // Add slight offset for cascade effect
     const offset = 20 * (document.querySelectorAll(".custom-card").length - 1);
+    
+    // Set initial position through transform instead of left/top
+    this.xOffset = Math.max(0, centerX + offset);
+    this.yOffset = Math.max(30, centerY + offset);
+    this.window.style.transform = `translate(${this.xOffset}px, ${this.yOffset}px)`;
 
-    // Set position
-    this.window.style.left = `${Math.max(0, centerX + offset)}px`;
-    this.window.style.top = `${Math.max(30, centerY + offset)}px`;
-
-    // Add window event listeners
+    // Rest of the event listeners setup
     this.window.addEventListener("mousedown", (e) => this.dragStart(e));
     document.addEventListener("mousemove", (e) => this.drag(e));
     document.addEventListener("mouseup", () => this.dragEnd());
@@ -237,13 +203,14 @@ export class WindowManager {
     // Focus handling
     this.window.addEventListener("mousedown", () => this.focus());
 
-    // Setup folder items click handlers
+    // Setup content listeners
     this.setupContentListeners();
-
-    // Setup address bar click handlers
-    this.setupAddressBarListeners();
+    
+    // Setup address bar listeners if not a file
+    if (this.itemData.type !== "file") {
+      this.setupAddressBarListeners();
+    }
   }
-
   setupAddressBarListeners() {
     this.window.querySelectorAll(".path-part").forEach((part) => {
       part.addEventListener("click", () => {
@@ -256,31 +223,15 @@ export class WindowManager {
   }
 
   setupContentListeners() {
-    this.window.querySelectorAll(".folder-item").forEach((item) => {
-      // Double click handler for navigation
-      item.addEventListener("dblclick", () => {
-        const itemKey = item.dataset.key;
-        const itemType = item.dataset.type;
-
-        if (
-          itemType === "folder" ||
-          itemType === "drive" ||
-          itemType === "root"
-        ) {
-          this.navigateToContent(itemKey);
-        } else {
-          this.displayFileContent(itemKey);
-        }
-      });
-
-      // Click handler for selection
-      item.addEventListener("click", () => {
-        this.window
-          .querySelectorAll(".folder-item")
-          .forEach((i) => i.classList.remove("selected"));
-        item.classList.add("selected");
-      });
-    });
+    if (this.itemData.type === "file") {
+      setupNotepadListeners(this.window);
+    } else {
+      setupFolderListeners(
+        this.window,
+        this.navigateToContent.bind(this),
+        this.displayFileContent.bind(this)
+      );
+    }
   }
 
   navigateToContent(itemKey) {
@@ -288,7 +239,7 @@ export class WindowManager {
     if (!this.currentPath) {
       newPath = itemKey;
     } else {
-      const cleanPath = this.currentPath.split(".children.").join(".");
+      const cleanPath = this.currentPath.split('.children.').join('.');
       newPath = `${cleanPath}.children.${itemKey}`;
     }
 
@@ -298,7 +249,7 @@ export class WindowManager {
       // Update current path and router
       this.currentPath = newPath;
       router.updateUrl(newPath);
-
+      
       // Update window content
       this.itemData = newContent;
       const titleElement = this.header.querySelector("span");
@@ -320,7 +271,7 @@ export class WindowManager {
       // Update current path and router
       this.currentPath = pathKey;
       router.updateUrl(pathKey);
-
+      
       // Update window content
       this.itemData = content;
       const titleElement = this.header.querySelector("span");
@@ -341,27 +292,18 @@ export class WindowManager {
     if (!this.currentPath) {
       filePath = itemKey;
     } else {
-      const cleanPath = this.currentPath.split(".children.").join(".");
+      const cleanPath = this.currentPath.split('.children.').join('.');
       filePath = `${cleanPath}.children.${itemKey}`;
     }
-
-    const currentItem = this.getItemFromPath(filePath);
-
-    if (currentItem) {
-      const fileContent = `
-        <div class="file-content p-3">
-          <h4>Content for: ${currentItem.title}</h4>
-          <p>This is the content of the file. You can customize this based on the file type and your needs.</p>
-        </div>
-      `;
-
-      const cardBody = this.window.querySelector(".card-body");
-      cardBody.innerHTML = fileContent;
-    }
+    
+    const fileWindow = createNewWindow(filePath);
+    fileWindow.focus();
   }
 
   generateContent(item = this.itemData) {
-    if (item.children) {
+    if (item.type === "file") {
+      return generateNotepadContent(item.title);
+    } else if (item.children) {
       return generateFolderView(item.children);
     }
     return `<div class="file-view">Content for ${item.title}</div>`;
@@ -372,10 +314,16 @@ export class WindowManager {
     const button = document.createElement("button");
     button.className = "window-button";
     button.id = `taskbar-${this.windowId}`;
+    
+    // Different icon for files vs folders
+    const icon = this.itemData.type === "file" ? "📝" : "📁";
+    
     button.innerHTML = `
-      <span class="window-icon">📝</span>
+      <span class="window-icon">${icon}</span>
       ${title}
+      ${this.itemData.type === "file" ? " - Notepad" : ""}
     `;
+    
     button.addEventListener("click", () => this.toggleMinimize());
     taskbarWindows.appendChild(button);
     this.taskbarButton = button;
@@ -457,19 +405,17 @@ export class WindowManager {
     this.window.dataset.windowState = "maximized";
 
     this.originalDimensions = {
-      width: this.window.style.width || "400px",
+      width: this.window.style.width || "600px",
       height: this.window.style.height || "auto",
       top: this.window.style.top || "32px",
       left: this.window.style.left || "32px",
       transform: this.window.style.transform || "none",
     };
 
-    const taskbarHeight = 30;
     Object.assign(this.window.style, {
       top: `${taskbarHeight}px`,
       left: "0",
-      width: "1024px",
-      height: `${800 - taskbarHeight}px`,
+      ...dimensions,
       transform: "none",
       borderRadius: "0",
       margin: "0",
@@ -532,32 +478,23 @@ export class WindowManager {
   close() {
     // Unregister window from router
     router.unregisterWindow(this.currentPath);
-
+    
     // Remove DOM elements
     this.window.remove();
     this.taskbarButton.remove();
-
-    // Get all remaining windows
-    const remainingWindows = router.getWindows();
-
-    if (remainingWindows.size === 0) {
-      // If this was the last window, clear the hash completely
-      history.pushState(
-        "",
-        document.title,
-        window.location.pathname + window.location.search
-      );
+    
+    // Clear URL if this was the last window
+    if (router.getWindows().size === 0) {
+      history.pushState("", document.title, window.location.pathname + window.location.search);
     } else {
-      // If there are other windows, update URL to reflect the most recently focused one
-      const focusedWindow = Array.from(
-        document.querySelectorAll(".custom-card")
-      ).find((card) => card.style.zIndex === "2");
-
+      // Update URL to show the currently focused window
+      const focusedWindow = Array.from(document.querySelectorAll('.custom-card'))
+        .find(card => card.style.zIndex === "2");
+        
       if (focusedWindow) {
-        const windowInstance = Array.from(remainingWindows.values()).find(
-          (w) => w.windowId === focusedWindow.id
-        );
-
+        const windowInstance = Array.from(router.getWindows().values())
+          .find(w => w.windowId === focusedWindow.id);
+          
         if (windowInstance) {
           router.updateUrl(windowInstance.currentPath);
         }
@@ -576,12 +513,10 @@ export class WindowManager {
 
   // Helper method to get parent path
   getParentPath() {
-    const pathSegments = this.currentPath.split(".");
+    const pathSegments = this.currentPath.split('.');
     // Remove 'children' from the path if present
-    const cleanedSegments = pathSegments.filter(
-      (segment) => segment !== "children"
-    );
-    return cleanedSegments.slice(0, -1).join(".");
+    const cleanedSegments = pathSegments.filter(segment => segment !== 'children');
+    return cleanedSegments.slice(0, -1).join('.');
   }
 
   // Navigate up one level
@@ -590,11 +525,6 @@ export class WindowManager {
     if (parentPath) {
       this.navigateToPath(parentPath);
     }
-  }
-
-  // Refresh current view
-  refresh() {
-    this.navigateToPath(this.currentPath);
   }
 
   // Check if path exists
@@ -609,21 +539,11 @@ export class WindowManager {
 
   // Get selected items
   getSelectedItems() {
-    const selectedElements = this.window.querySelectorAll(
-      ".folder-item.selected"
-    );
-    return Array.from(selectedElements).map((element) => ({
+    const selectedElements = this.window.querySelectorAll('.folder-item.selected');
+    return Array.from(selectedElements).map(element => ({
       key: element.dataset.key,
-      type: element.dataset.type,
+      type: element.dataset.type
     }));
-  }
-
-  // Update window title
-  updateTitle(newTitle) {
-    const titleElement = this.header.querySelector("span");
-    if (titleElement) {
-      titleElement.textContent = newTitle;
-    }
   }
 
   // Check if window is focused
@@ -640,10 +560,7 @@ export class WindowManager {
   // Check if path is a folder
   isFolder(path) {
     const item = this.getItemFromPath(path);
-    return (
-      item &&
-      (item.type === "folder" || item.type === "drive" || item.type === "root")
-    );
+    return item && (item.type === "folder" || item.type === "drive" || item.type === "root");
   }
 }
 
@@ -651,28 +568,21 @@ let windowCounter = 1;
 
 export function createNewWindow(path) {
   const windowId = `window-${windowCounter++}`;
-
+  
   // If window already exists for this path, focus it instead
   const existingWindow = router.getWindows().get(path);
   if (existingWindow) {
     existingWindow.focus();
     return existingWindow;
   }
-
+  
   // Handle menu prefix paths
-  if (path.startsWith("my-")) {
+  if (path.startsWith('my-')) {
     const mappedKey = menuMap[path];
     if (mappedKey) {
       return new WindowManager(windowId, path);
     }
   }
-
+  
   return new WindowManager(windowId, path);
 }
-
-// Usage examples:
-// const window = createNewWindow('ourKennel');
-// window.navigateToContent('aboutUs');
-// window.maximize();
-// window.minimize();
-// window.close();
