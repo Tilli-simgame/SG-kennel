@@ -129,84 +129,226 @@ body {
   background: white;
 }
 
-.dropdown-item-header {
-  padding: 8px 16px;
-  background-color: #245edb;
+/* Additional styles for nested dropdowns */
+.start-menu-shortcuts .dropend .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: 0;
+  margin-left: 1px;
+  background: white;
+  border: 1px solid #999;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.start-menu-shortcuts .start-menu-item a {
+  text-decoration: none;
+  color: inherit;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+}
+
+.start-menu-shortcuts .start-menu-item:hover {
+  background-color: #316ac5;
   color: white;
+}
+
+.start-menu-shortcuts .dropdown-menu {
+  padding: 2px;
+  min-width: 200px;
+}
+
+.start-menu-shortcuts .dropdown-item {
+  padding: 4px 8px;
+}
+
+/* Ensure proper nesting behavior */
+.start-menu-shortcuts .dropend {
+  position: relative;
+}
+
+.start-menu-shortcuts .dropend:hover > .dropdown-menu {
+  display: block;
+}
+
+/* Ensure proper arrow display */
+.start-menu-shortcuts .dropend .ms-2 {
+  font-size: 10px;
+}
+
+/* Start Menu Styles */
+.dropdown-menu.start-menu {
+  width: 380px;
+  padding: 2px;
+  border: 2px solid #003c74;
+  border-radius: 0;
+  background: #fff;
+  margin-top: 2px;
+}
+
+.start-menu-header, .start-menu-footer {
+  background: linear-gradient(to right, #0050e0, #3690ea);
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.account-image-wrapper {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.account-name {
+  color: white;
+  font-size: 14px;
+  margin: 0;
   font-weight: bold;
 }
 
-.dropdown-item {
-  padding: 8px 16px;
+.log-off-button {
   display: flex;
   align-items: center;
   gap: 8px;
-}
-
-.dropdown-item:hover {
-  background-color: #245edb;
+  background: none;
+  border: none;
   color: white;
+  font-weight: bold;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 3px;
+  width: 100%;
 }
 
-.menu-icon {
-  font-size: 1.2em;
+.log-off-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.log-off-button .icon {
+  font-size: 18px;
   width: 24px;
-  text-align: center;
-}
-
-/* Taskbar Windows Area */
-.active-windows {
-  display: flex;
-  gap: 4px;
-  padding-left: 6px;
-}
-
-/* Window Button in Taskbar */
-.window-button {
-  background: linear-gradient(to bottom, #3e91fd, #2272e9);
-  border: 1px solid #1f50b1;
-  border-radius: 2px;
-  color: white;
-  padding: 2px 8px;
-  min-width: 120px;
   height: 24px;
   display: flex;
   align-items: center;
-  gap: 4px;
-  transition: all 0.2s ease;
+  justify-content: center;
 }
 
-.window-button:hover {
-  background: linear-gradient(to bottom, #4aa1ff, #2982f9);
+
+.start-menu-body {
+  display: flex;
+  min-height: 300px;
+  max-height: 500px;
 }
 
-.window-button.active {
-  background: linear-gradient(to bottom, #3272dc, #2461c9);
-  border-color: #1941a5;
+.start-menu-favorites {
+  width: 40%;
+  padding: 8px;
+  background: white;
 }
 
-.window-button:active {
-  transform: translateY(1px);
+.start-menu-shortcuts {
+  width: 60%;
+  padding: 8px;
+  background: #d3e5fa;
 }
 
-.window-icon {
-  font-size: 14px;
-}
-
-/* System Tray */
-.system-tray {
-  background: linear-gradient(to bottom, #1f50b1, #2461c9);
-  border-left: 1px solid #1f50b1;
-  padding: 0 10px;
-  height: 100%;
+.start-menu-item {
   display: flex;
   align-items: center;
+  padding: 4px 8px;
+  gap: 8px;
+  cursor: pointer;
+  border-radius: 3px;
 }
 
-.clock {
+.start-menu-item:hover {
+  background-color: #316ac5;
   color: white;
+}
+
+.start-menu-item:hover .program {
+  color: #fff !important;
+}
+
+.start-menu-item .icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.start-menu-item .menu-link {
+  text-decoration: none;
+  color: inherit;
+  flex-grow: 1;
+}
+
+.start-menu-item:hover .menu-link {
+  color: white;
+}
+
+.menu-link {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  flex-grow: 1;
+}
+
+.intent-item .label {
+  display: flex;
+  flex-direction: column;
+}
+
+.intent-item .intent {
+  font-weight: bold;
   font-size: 11px;
-  padding: 2px 4px;
+}
+
+.intent-item .program {
+  font-size: 10px;
+  color: #666;
+}
+
+.divider {
+  height: 1px;
+  background: #ccc;
+  margin: 4px 0;
+}
+
+.all-programs {
+  margin-top: auto;
+}
+
+.all-programs-button {
+  font-weight: bold;
+}
+
+/* Override default dropdown styles */
+.dropdown-menu {
+  padding: 0;
+}
+
+.dropdown-menu li:first-child {
+  margin-top: 0;
+}
+
+/* Ensure menu items maintain their style */
+.start-menu-item.dropdown-item {
+  width: auto;
+  padding: 4px 8px;
+  white-space: normal;
+}
+
+.start-menu-item.dropdown-item:hover,
+.start-menu-item.dropdown-item:focus {
+  background-color: #316ac5;
+  color: white;
 }
 
 /* Window Styles */

@@ -20,27 +20,14 @@ function initializeMenu() {
   startMenu.innerHTML = generateStartMenu();
 
   // Add click handlers for all menu items
-  document.querySelectorAll(".dropdown-item").forEach((item) => {
+  document.querySelectorAll(".menu-link").forEach((item) => {
     item.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
 
       const id = e.currentTarget.id;
-
-      // Handle menu items
       if (menuMap[id]) {
-        // Root level items
         createNewWindow(menuMap[id]);
-      } else if (id.includes("-")) {
-        // Convert ID path to structure path
-        const parts = id.split("-");
-        const rootMenuItem = parts[0] + "-" + parts[1]; // e.g., "my-computer"
-        const rootKey = menuMap[rootMenuItem];
-
-        if (rootKey) {
-          const structurePath = [rootKey, ...parts.slice(2)].join(".");
-          createNewWindow(structurePath);
-        }
       }
     });
   });

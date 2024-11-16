@@ -1,82 +1,66 @@
 // generateNavbarMenu.js
 import { kennelStructure, menuMap } from "./kennelStructure.js";
 
-function generateNestedDropdownItems(children, parentId) {
-  return Object.entries(children)
-    .map(([key, item]) => {
-      const hasChildren =
-        item.children && Object.keys(item.children).length > 0;
-      const itemId = parentId ? `${parentId}-${key}` : key;
-
-      if (hasChildren) {
-        return `
-        <li class="dropend">
-          <a class="dropdown-item d-flex justify-content-between align-items-center" href="#" id="${itemId}" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-            <span class="d-flex align-items-center gap-2">
-              <span class="menu-icon">${item.icon}</span>
-              ${item.title}
-            </span>
-            <span class="ms-2">▶</span>
-          </a>
-          <ul class="dropdown-menu">
-            ${generateNestedDropdownItems(item.children, itemId)}
-          </ul>
-        </li>
-      `;
-      }
-
+function generateMainMenuItems() {
+  return Object.entries(menuMap)
+    .map(([menuId, structureKey]) => {
+      const item = kennelStructure[structureKey];
       return `
-      <li>
-        <a class="dropdown-item d-flex align-items-center gap-2" href="#" id="${itemId}">
-          <span class="menu-icon">${item.icon}</span>
+      <div class="start-menu-item my-item">
+        <div class="icon">${item.icon}</div>
+        <a class="menu-link" id="${menuId}">
           ${item.title}
         </a>
-      </li>
+      </div>
     `;
     })
     .join("");
 }
 
 export function generateStartMenu() {
-  const menuItems = Object.entries(menuMap)
-    .map(([menuId, structureKey]) => {
-      const item = kennelStructure[structureKey];
-      const hasChildren =
-        item.children && Object.keys(item.children).length > 0;
-
-      if (hasChildren) {
-        return `
-        <li class="dropend">
-          <a class="dropdown-item d-flex justify-content-between align-items-center" href="#" id="${menuId}" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-            <span class="d-flex align-items-center gap-2">
-              <span class="menu-icon">${item.icon}</span>
-              ${item.title}
-            </span>
-            <span class="ms-2">▶</span>
-          </a>
-          <ul class="dropdown-menu">
-            ${generateNestedDropdownItems(item.children, menuId)}
-          </ul>
-        </li>
-      `;
-      }
-
-      return `
-      <li>
-        <a class="dropdown-item d-flex align-items-center gap-2" href="#" id="${menuId}">
-          <span class="menu-icon">${item.icon}</span>
-          ${item.title}
-        </a>
-      </li>
-    `;
-    })
-    .join("");
-
   return `
-    <li class="dropdown-item-header">
-      <span class="user-name">User Name</span>
-    </li>
-    <li><hr class="dropdown-divider" /></li>
-    ${menuItems}
+    <div class="start-menu-header">
+      <div class="account-image-wrapper">
+        <img src="/api/placeholder/32/32" alt="User">
+      </div>
+      <h1 class="account-name">Visitor</h1>
+    </div>
+    <div class="start-menu-body">
+      <div class="start-menu-favorites">
+        <div class="start-menu-item intent-item">
+          <div class="icon">🌐</div>
+          <div class="label">
+            <div class="intent">Internet</div>
+            <div class="program">Internet Explorer</div>
+          </div>
+        </div>
+        <div class="start-menu-item intent-item">
+          <div class="icon">📧</div>
+          <div class="label">
+            <div class="intent">E-mail</div>
+            <div class="program">Outlook Express</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="all-programs">
+          <div class="divider"></div>
+          <div class="start-menu-item all-programs-button">All Programs</div>
+        </div>
+      </div>
+      <div class="start-menu-shortcuts">
+        ${generateMainMenuItems()}
+        <div class="divider"></div>
+        <div class="start-menu-item">
+          <div class="icon">❓</div>
+          <div class="label">Help and Support</div>
+        </div>
+      </div>
+    </div>
+    <div class="start-menu-footer">
+      <button class="log-off-button">
+        <div class="icon">🔒</div>
+        <span>Log Off</span>
+      </button>
+    </div>
   `;
 }
