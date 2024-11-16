@@ -44,6 +44,7 @@ body {
   position: relative;
   overflow: hidden;
   background: #3a6ea5;
+  background-image: url(assets/img/background.jpeg);
 }
 
 /* Folder View Styles */
@@ -85,33 +86,7 @@ body {
 
 /* Taskbar */
 .taskbar {
-  background: linear-gradient(
-    to bottom,
-    #1f48a1 0%,
-    #245edb 3%,
-    #3474f3 6%,
-    #0954ec 10%,
-    #0046e2 12%,
-    #0040dd 15%,
-    #0040dd 16%,
-    #003bd7 18%,
-    #003bd7 20%,
-    #0039d5 25%,
-    #0036d0 35%,
-    #0034cd 40%,
-    #0031c7 45%,
-    #002ec0 50%,
-    #002abc 55%,
-    #0029bb 60%,
-    #0027b7 65%,
-    #0024b3 70%,
-    #0020ac 75%,
-    #001ca5 80%,
-    #00189e 85%,
-    #001698 90%,
-    #001492 95%,
-    #00128c 100%
-  );
+  background:linear-gradient(to top, #245edb 0%, #3f8cf3 9%, #245edb 18%, #245edb 92%, #333 100%) center/cover no-repeat;
   border-bottom: 1px solid #0831d9;
   padding: 2px;
   margin: 0;
@@ -125,33 +100,18 @@ body {
 
 /* Start Button */
 .start-button {
-  background: linear-gradient(
-    to bottom,
-    #5aa855 0%,
-    #4a9946 3%,
-    #3f8c3c 6%,
-    #297a25 10%,
-    #1c7117 16%,
-    #156912 20%,
-    #146411 25%,
-    #115b0e 35%,
-    #0f550c 45%,
-    #0c4c0a 55%,
-    #0a4608 65%,
-    #094207 75%,
-    #073a06 85%,
-    #063505 95%,
-    #053004 100%
-  );
+  background: linear-gradient(to top, #1f9c35 0%, #3bd54e 9%, #1f9c35 18%, #1f9c35 92%, #333 100%) center/cover no-repeat;
   color: white;
-  border: 1px solid #3b7a38;
-  border-radius: 3px;
-  padding: 4px 12px 4px 8px;
+  border: none;
+  border-radius: 5px;
   font-weight: bold;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
-  height: 26px;
+  height: 27px;
+  margin-top: -2px;
+  margin-left: -6px;
   display: flex;
   align-items: center;
+  width: 70px;
 }
 
 .start-button:hover {

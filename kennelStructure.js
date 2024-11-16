@@ -44,52 +44,13 @@ export const kennelStructure = {
     icon: "🐕",
     type: "root",
     children: {
-      currentDogs: {
-        title: "Current Dogs",
+      packOfPaws: {
+        title: "Pack of Paws",
         icon: "📁",
         type: "folder",
         children: {
-          adultDogs: { 
-            title: "Adult Dogs", 
-            icon: "📁", 
-            type: "folder",
-            children: {
-              dogA: {
-                title: "Dog A",
-                icon: "📄",
-                type: "file"
-              },
-              dogB: {
-                title: "Dog B",
-                icon: "📄",
-                type: "file"
-              }
-              ,
-              dogC: {
-                title: "Dog C",
-                icon: "📄",
-                type: "file"
-              },
-              dogD: {
-                title: "Dog D",
-                icon: "📄",
-                type: "file"
-              },
-              dogE: {
-                title: "Dog E",
-                icon: "📄",
-                type: "file"
-              }
-              ,
-              dogF: {
-                title: "Dog F",
-                icon: "📄",
-                type: "file"
-              }
-            }
-          },
-          puppies: { title: "Puppies", icon: "📁", type: "file" },
-          champions: { title: "Retired Champions", icon: "📁", type: "file" },
+          dogA: { title: "Dog A", icon: "📄", type: "file" },
+          dogB: { title: "Dog B", icon: "📄", type: "file" },
         },
       },
       breedingProgram: {
@@ -99,20 +60,9 @@ export const kennelStructure = {
         children: {
           studs: { title: "Available Studs", icon: "📄", type: "file" },
           litters: { title: "Expected Litters", icon: "📄", type: "file" },
-          pastLitters: { title: "Past Litters", icon: "📄", type: "file" },
-          gallery: { title: "Puppy Gallery", icon: "📄", type: "file" },
+          pastLitters: { title: "Past Litters", icon: "📄", type: "file" }
         },
-      },
-      showResults: {
-        title: "Show Results",
-        icon: "📁",
-        type: "folder",
-        children: {
-          championships: { title: "Championships", icon: "📄", type: "file" },
-          awards: { title: "Awards", icon: "📄", type: "file" },
-          calendar: { title: "Show Calendar", icon: "📄", type: "file" },
-        },
-      },
+      }
     },
   },
   photoGallery: {

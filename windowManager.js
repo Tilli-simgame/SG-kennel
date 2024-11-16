@@ -404,19 +404,30 @@ export class WindowManager {
     this.isMaximized = true;
     this.window.dataset.windowState = "maximized";
 
+    // Store current dimensions and position before maximizing
     this.originalDimensions = {
-      width: this.window.style.width || "600px",
+      width: this.window.style.width || "400px",
       height: this.window.style.height || "auto",
-      top: this.window.style.top || "32px",
-      left: this.window.style.left || "32px",
-      transform: this.window.style.transform || "none",
+      transform: this.window.style.transform || `translate(${this.xOffset}px, ${this.yOffset}px)`,
     };
+
+    // Different dimensions for file windows
+    const taskbarHeight = 30;
+    const dimensions = this.itemData.type === "file" 
+      ? {
+          width: "600px",
+          height: "400px",
+        }
+      : {
+          width: "1024px",
+          height: `${800 - taskbarHeight}px`,
+        };
 
     Object.assign(this.window.style, {
       top: `${taskbarHeight}px`,
       left: "0",
       ...dimensions,
-      transform: "none",
+      transform: "none", // Reset transform when maximized
       borderRadius: "0",
       margin: "0",
     });
@@ -436,8 +447,6 @@ export class WindowManager {
       Object.assign(this.window.style, {
         width: this.originalDimensions.width,
         height: this.originalDimensions.height,
-        top: this.originalDimensions.top,
-        left: this.originalDimensions.left,
         transform: this.originalDimensions.transform,
         borderRadius: "3px",
         margin: "0",
