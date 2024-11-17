@@ -2,18 +2,28 @@
 export function getFolderWindowHTML(windowId, title, pathStructure, content) {
   return `
     <div class="card custom-card" id="${windowId}" data-window-state="normal">
-      <div class="card-header d-flex justify-content-between align-items-center" id="${windowId}-header">
-        <span>${title}</span>
-        <div class="title-controls">
-          <button class="btn btn-sm window-control" data-action="minimize" title="Minimize">-</button>
-          <button class="btn btn-sm window-control" data-action="maximize" title="Maximize">□</button>
-          <button class="btn btn-sm window-control" data-action="close" title="Close">×</button>
+      <div class="d-flex justify-content-between align-items-center title-bar" id="${windowId}-header">
+        <span class="title-bar-text">${title}</span>
+        <div class="title-bar-controls">
+          <button data-action="minimize" title="Minimize" aria-label="Minimize"></button>
+          <button data-action="maximize" title="Maximize" aria-label="Maximize"></button>
+          <button data-action="close" title="Close" aria-label="Close"></button>
         </div>
       </div>
-      <div class="address-bar d-flex align-items-center">
-        <span class="address-label">Address</span>
-        <div class="address-content">
-          ${pathStructure}
+      <div class="toolbar">
+      <ul class="menu-bar">
+          <li class="menu-item disabled">File</li>
+          <li class="menu-item disabled">Edit</li>
+          <li class="menu-item disabled">View</li>
+          <li class="menu-item disabled">Favorites</li>
+          <li class="menu-item disabled">Tools</li>
+          <li class="menu-item disabled">Help</li>
+        </ul>
+        <div class="address-bar d-flex align-items-center">
+          <span class="address-label">Address</span>
+          <div class="address-content">
+            ${pathStructure}
+          </div>
         </div>
       </div>
       <div class="card-body">

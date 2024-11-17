@@ -21,7 +21,7 @@ export function generateStartMenu() {
   return `
     <div class="start-menu-header">
       <div class="account-image-wrapper">
-        <img src="/api/placeholder/32/32" alt="User">
+        <img src="https://placedog.net/45/48" alt="User">
       </div>
       <h1 class="account-name">Visitor</h1>
     </div>
