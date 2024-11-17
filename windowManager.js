@@ -191,7 +191,7 @@ export class WindowManager {
     this.header.addEventListener("dblclick", () => this.toggleMaximize());
 
     // Setup control buttons
-    this.window.querySelectorAll(".window-control").forEach((button) => {
+    this.window.querySelectorAll('[data-action]').forEach((button) => {
       button.addEventListener("click", (e) => {
         const action = e.target.dataset.action;
         if (action === "minimize") this.minimize();
@@ -311,22 +311,21 @@ export class WindowManager {
 
   createTaskbarButton(title) {
     const taskbarWindows = document.getElementById("taskbar-windows");
-    const button = document.createElement("button");
-    button.className = "window-button";
-    button.id = `taskbar-${this.windowId}`;
+    const taskbarItem = document.createElement("div");
+    taskbarItem.className = "taskbar-item";
+    taskbarItem.id = `taskbar-${this.windowId}`;
     
     // Different icon for files vs folders
     const icon = this.itemData.type === "file" ? "📝" : "📁";
     
-    button.innerHTML = `
+    taskbarItem.innerHTML = `
       <span class="window-icon">${icon}</span>
-      ${title}
-      ${this.itemData.type === "file" ? " - Notepad" : ""}
+      <span class="window-title">${title}${this.itemData.type === "file" ? " - Notepad" : ""}</span>
     `;
     
-    button.addEventListener("click", () => this.toggleMinimize());
-    taskbarWindows.appendChild(button);
-    this.taskbarButton = button;
+    taskbarItem.addEventListener("click", () => this.toggleMinimize());
+    taskbarWindows.appendChild(taskbarItem);
+    this.taskbarButton = taskbarItem;
   }
 
   dragStart(e) {

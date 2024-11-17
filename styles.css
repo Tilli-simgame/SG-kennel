@@ -10,6 +10,7 @@ body {
   align-items: center;
   overflow: hidden;
   background-color: black;
+  font-family:verdana;
 }
 
 /* Mobile Navigation - Hidden by default */
@@ -108,7 +109,7 @@ body {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
   height: 27px;
   margin-top: -2px;
-  margin-left: -6px;
+  margin-left: -14px;
   display: flex;
   align-items: center;
   width: 70px;
@@ -118,10 +119,78 @@ body {
   background: linear-gradient(to bottom, #60b35a, #52a74e);
 }
 
+/* Taskbar item styles */
+.taskbar-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 8px;
+  margin-right: 2px;
+  font-size: 11px;
+  cursor: pointer;
+  color: white;
+  user-select: none;
+}
+
+.taskbar-item:hover {
+  background-color: rgb(83, 163, 255);
+    box-shadow: rgba(0, 0, 0, 0.3) -1px 0px inset, rgba(255, 255, 255, 0.2) 1px 1px 1px inset;
+}
+
+.taskbar-item:active {
+  background-color: rgb(30, 82, 183);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 1px 1px inset, rgba(0, 0, 0, 0.7) 1px 0px 1px inset;
+}
+
+.taskbar-item.active {
+  background-color: rgb(60, 129, 243);
+  box-shadow: rgba(0, 0, 0, 0.3) -1px 0px inset, 
+              rgba(255, 255, 255, 0.2) 1px 1px 1px inset;
+}
+
+.taskbar-item:hover:not(.active) {
+  background-color: rgba(60, 129, 243, 0.7);
+  box-shadow: rgba(0, 0, 0, 0.2) -1px 0px inset, 
+              rgba(255, 255, 255, 0.1) 1px 1px 1px inset;
+}
+
+.window-icon {
+  font-size: 14px;
+}
+
+.window-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 150px;
+}
+
+/* Update focus styles */
+.taskbar-item:focus {
+  outline: none;
+}
+
+
+.system-tray {
+  background: linear-gradient(rgb(12, 89, 185) 1%, rgb(19, 158, 233) 6%, rgb(24, 181, 242) 10%, rgb(19, 155, 235) 14%, rgb(18, 144, 232) 19%, rgb(13, 141, 234) 63%, rgb(13, 159, 241) 81%, rgb(15, 158, 237) 88%, rgb(17, 155, 233) 91%, rgb(19, 146, 226) 94%, rgb(19, 126, 215) 97%, rgb(9, 91, 201) 100%);
+  border-left: 1px solid rgb(16, 66, 175);
+  box-shadow: rgb(24, 187, 255) 1px 0px 1px inset;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  margin-right: -13px;
+}
+
+span#clock {
+  color: white;
+  font-size: 10px;
+}
+
 /* Start Menu */
 .start-menu {
   min-width: 220px;
-  padding: 8px 0;
+  padding: 0;
   margin-top: 4px;
   border: 1px solid #2b579a;
   border-radius: 3px;
@@ -129,95 +198,273 @@ body {
   background: white;
 }
 
-.dropdown-item-header {
-  padding: 8px 16px;
-  background-color: #245edb;
-  color: white;
-  font-weight: bold;
+/* Additional styles for nested dropdowns */
+.start-menu-shortcuts .dropend .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: 0;
+  margin-left: 1px;
+  background: white;
+  border: 1px solid #999;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.dropdown-item {
-  padding: 8px 16px;
+.start-menu-shortcuts .start-menu-item a {
+  text-decoration: none;
+  color: inherit;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+}
+
+.start-menu-shortcuts .start-menu-item:hover {
+  background-color: #316ac5;
+  color: white;
+}
+
+.start-menu-shortcuts .dropdown-menu {
+  padding: 2px;
+  min-width: 200px;
+}
+
+.start-menu-shortcuts .dropdown-item {
+  padding: 4px 8px;
+}
+
+/* Ensure proper nesting behavior */
+.start-menu-shortcuts .dropend {
+  position: relative;
+}
+
+.start-menu-shortcuts .dropend:hover > .dropdown-menu {
+  display: block;
+}
+
+/* Ensure proper arrow display */
+.start-menu-shortcuts .dropend .ms-2 {
+  font-size: 10px;
+}
+
+/* Start Menu Styles */
+.dropdown-menu.start-menu {
+  width: 380px;
+  border: 1px solid #003c74;
+  border-radius: 0;
+  background: #fff;
+  margin-top: 2px;
+  margin-left: -7px;
+}
+
+.start-menu-header, .start-menu-footer {
+  background:linear-gradient(to top, #245edb 0%, #0c8dea 100%);
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.start-menu-header {
+  box-shadow: 3px 2px 3px #7fbce8 inset;
+}
+
+.start-menu-footer {
+  box-shadow: -2px -2px 5px rgba(20, 20, 20, 0.6) inset;
+}
+
+.account-image-wrapper {
+  background-color: white;
+    border-radius: 5px;
+    padding: 2px;
+    height: 52px;
+    display: inline-block;
+    box-shadow: 2px 2px 4px #333;
+}
+
+.account-name {
+  display: inline-block;
+  margin: 0;
+  color: white;
+  font-size: 18px;
+  font-weight: normal;
+  margin-left: 10px;
+  text-shadow: 0px 0px 3px #555;
+}
+
+.log-off-button {
   display: flex;
   align-items: center;
   gap: 8px;
-}
-
-.dropdown-item:hover {
-  background-color: #245edb;
+  background: none;
+  border: none;
   color: white;
+  font-weight: bold;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 3px;
+  width: 100%;
 }
 
-.menu-icon {
-  font-size: 1.2em;
+.log-off-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.log-off-button .icon {
+  font-size: 18px;
   width: 24px;
-  text-align: center;
-}
-
-/* Taskbar Windows Area */
-.active-windows {
-  display: flex;
-  gap: 4px;
-  padding-left: 6px;
-}
-
-/* Window Button in Taskbar */
-.window-button {
-  background: linear-gradient(to bottom, #3e91fd, #2272e9);
-  border: 1px solid #1f50b1;
-  border-radius: 2px;
-  color: white;
-  padding: 2px 8px;
-  min-width: 120px;
   height: 24px;
   display: flex;
   align-items: center;
-  gap: 4px;
-  transition: all 0.2s ease;
+  justify-content: center;
 }
 
-.window-button:hover {
-  background: linear-gradient(to bottom, #4aa1ff, #2982f9);
+
+.start-menu-body {
+  display: flex;
+  min-height: 300px;
+  max-height: 500px;
 }
 
-.window-button.active {
-  background: linear-gradient(to bottom, #3272dc, #2461c9);
-  border-color: #1941a5;
+.start-menu-body::before {
+  content: "";
+  position: absolute;
+  top: 63.5px;
+  left: 10%;
+  width: 80%;
+  height: 3px;
+  border-radius: 50%;
+  box-shadow: 0px 4px 5px #e88f0b;
+  z-index: 10;
 }
 
-.window-button:active {
-  transform: translateY(1px);
+.start-menu-favorites {
+  width: 40%;
+  padding: 8px;
+  background: white;
 }
 
-.window-icon {
-  font-size: 14px;
+.start-menu-shortcuts {
+  width: 60%;
+  padding: 8px;
+  background: #d3e5fa;
 }
 
-/* System Tray */
-.system-tray {
-  background: linear-gradient(to bottom, #1f50b1, #2461c9);
-  border-left: 1px solid #1f50b1;
-  padding: 0 10px;
-  height: 100%;
+.start-menu-item {
   display: flex;
   align-items: center;
+  padding: 4px 8px;
+  gap: 8px;
+  cursor: pointer;
+  border-radius: 3px;
 }
 
-.clock {
+.start-menu-item:hover {
+  background-color: #316ac5;
   color: white;
+}
+
+.start-menu-item:hover .program {
+  color: #fff !important;
+}
+
+.start-menu-item .icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.start-menu-item .menu-link {
+  text-decoration: none;
+  color: inherit;
+  flex-grow: 1;
+}
+
+.start-menu-item:hover .menu-link {
+  color: white;
+}
+
+.menu-link {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  flex-grow: 1;
+}
+
+.intent-item .label {
+  display: flex;
+  flex-direction: column;
+}
+
+.intent-item .intent {
+  font-weight: bold;
   font-size: 11px;
-  padding: 2px 4px;
+}
+
+.intent-item .program {
+  font-size: 10px;
+  color: #666;
+}
+
+.divider {
+  height: 1px;
+  background: #ccc;
+  margin: 4px 0;
+}
+
+.all-programs {
+  margin-top: auto;
+}
+
+.all-programs-button {
+  font-weight: bold;
+}
+
+/* Override default dropdown styles */
+.dropdown-menu {
+  padding: 0;
+}
+
+.dropdown-menu li:first-child {
+  margin-top: 0;
+}
+
+/* Ensure menu items maintain their style */
+.start-menu-item.dropdown-item {
+  width: auto;
+  padding: 4px 8px;
+  white-space: normal;
+}
+
+.start-menu-item.dropdown-item:hover,
+.start-menu-item.dropdown-item:focus {
+  background-color: #316ac5;
+  color: white;
+}
+
+.window-button {
+  background-color: rgb(60, 129, 243);
+    box-shadow: rgba(0, 0, 0, 0.3) -1px 0px inset, rgba(255, 255, 255, 0.2) 1px 1px 1px inset;
 }
 
 /* Window Styles */
+
+.title-bar-controls button {
+  min-width: 18px;
+  min-height: 18px;
+}
+
 .custom-card {
   position: absolute;
   display: flex;
   flex-direction: column;
   max-width: 700px; /* Updated default width */
   margin: 0;
-  background: #fff;
-  border: 1px solid #2b579a;
+  background:none;
+  border: none;
   border-radius: 3px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
@@ -225,6 +472,65 @@ body {
   overflow: hidden;
   z-index: 1;
   cursor: default;
+}
+
+.toolbar {
+  background: linear-gradient(to right, rgb(237, 237, 229) 0%, rgb(237, 232, 205) 100%);
+}
+
+.menu-bar {
+  border-bottom: none;
+  display: flex;
+  gap: 2px;
+  border: 1px solid #2b579a;
+  border-bottom: none;
+  border-top: none;
+  list-style: none;
+  margin-left: 0px;
+  padding-left: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.menu-item {
+  padding: 2px 8px;
+  font-size: 11px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: #444;
+  cursor: default;
+  user-select: none;
+}
+
+.menu-item.disabled {
+  color: #999;
+}
+
+.address-bar {
+  margin-bottom: -1px;
+  border: 1px solid #2b579a;
+  border-top: none;
+}
+
+/* Address bar remains the same */
+.address-bar {
+  padding: 3px 6px;
+}
+
+.address-label {
+  color: #666;
+  margin-right: 8px;
+  user-select: none;
+  font-size: 11px;
+}
+
+.address-content {
+  flex-grow: 1;
+  background: white;
+  border: 1px solid #999;
+  padding: 2px 4px;
+  border-radius: 2px;
+  font-size: 11px;
 }
 
 .custom-card:active {
@@ -320,6 +626,8 @@ body {
   flex: 1;
   min-height: 0;
   min-height: 200px; /* Minimum height for windows */
+  border: 1px solid #2b579a;
+    border-top: 0px;
 }
 
 /* Welcome window specific */
@@ -370,6 +678,7 @@ body {
   padding: 4px 0;
   border: 1px solid #c3c3c3;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 10px;
 }
 
 .dropdown-item {
@@ -420,7 +729,7 @@ body {
 /* Start menu specific styles */
 .start-menu {
   border: 2px solid #003c74;
-  padding: 2px 0;
+  padding: 0;
   margin-top: 2px;
 }
 

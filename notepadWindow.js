@@ -1,23 +1,26 @@
 // notepadWindow.js
 export function getNotepadWindowHTML(windowId, title, content) {
   return `
-    <div class="card custom-card notepad-window" id="${windowId}" data-window-state="normal">
-      <div class="card-header d-flex justify-content-between align-items-center" id="${windowId}-header">
-        <span>${title} - Notepad</span>
-        <div class="title-controls">
-          <button class="btn btn-sm window-control" data-action="minimize" title="Minimize">-</button>
-          <button class="btn btn-sm window-control" data-action="maximize" title="Maximize">□</button>
-          <button class="btn btn-sm window-control" data-action="close" title="Close">×</button>
+    <div class="card custom-card" id="${windowId}" data-window-state="normal">
+      <div class="d-flex justify-content-between align-items-center title-bar" id="${windowId}-header">
+        <span class="title-bar-text">${title}</span>
+        <div class="title-bar-controls">
+          <button data-action="minimize" title="Minimize" aria-label="Minimize"></button>
+          <button data-action="maximize" title="Maximize" aria-label="Maximize"></button>
+          <button data-action="close" title="Close" aria-label="Close"></button>
         </div>
       </div>
-      <div class="menu-bar">
-        <div class="menu-item">File</div>
-        <div class="menu-item">Edit</div>
-        <div class="menu-item">Format</div>
-        <div class="menu-item">View</div>
-        <div class="menu-item">Help</div>
+      <div class="toolbar">
+      <ul class="menu-bar">
+          <li class="menu-item disabled">File</li>
+          <li class="menu-item disabled">Edit</li>
+          <li class="menu-item disabled">View</li>
+          <li class="menu-item disabled">Favorites</li>
+          <li class="menu-item disabled">Tools</li>
+          <li class="menu-item disabled">Help</li>
+        </ul>
       </div>
-      <div class="card-body notepad-content">
+      <div class="card-body">
         ${content}
       </div>
     </div>
@@ -67,18 +70,6 @@ const notepadStyles = `
     border-bottom: 1px solid #ddd;
   }
 
-  .menu-bar {
-    display: flex;
-    background-color: #f0f0f0;
-    border-bottom: 1px solid #ddd;
-    padding: 2px 0;
-  }
-
-  .menu-item {
-    padding: 2px 8px;
-    cursor: pointer;
-  }
-
   .menu-item:hover {
     background-color: #e0e0e0;
   }
@@ -99,6 +90,8 @@ const notepadStyles = `
     white-space: pre-wrap;
     outline: none;
     resize: none;
+    background-color: white;
+    color: black;
   }
 `;
 
