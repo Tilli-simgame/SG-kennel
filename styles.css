@@ -740,7 +740,7 @@ span#clock {
 }
 
 /* Mobile Responsive Styles */
-@media (max-width: 1024px), (max-height: 800px) {
+@media (max-width: 1024px), (max-height: 700px) {
   body {
     padding-top: 56px;
     background: #f8f9fa;
@@ -773,7 +773,7 @@ span#clock {
 }
 
 /* Desktop view */
-@media (min-width: 1025px) and (min-height: 801px) {
+@media (min-width: 1025px) and (min-height: 701px) {
   .mobile-nav {
     display: none;
   }
@@ -785,7 +785,7 @@ span#clock {
 
 /* Dark mode support for mobile view */
 @media (prefers-color-scheme: dark) {
-  @media (max-width: 1024px), (max-height: 800px) {
+  @media (max-width: 1024px), (max-height: 700px) {
     body {
       background: #212529;
       color: #f8f9fa;
