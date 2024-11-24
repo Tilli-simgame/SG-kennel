@@ -1,4 +1,5 @@
 // notepadWindow.js
+
 export function getNotepadWindowHTML(windowId, title, content) {
   return `
     <div class="card custom-card" id="${windowId}" data-window-state="normal">
@@ -11,7 +12,7 @@ export function getNotepadWindowHTML(windowId, title, content) {
         </div>
       </div>
       <div class="toolbar">
-      <ul class="menu-bar">
+        <ul class="menu-bar">
           <li class="menu-item disabled">File</li>
           <li class="menu-item disabled">Edit</li>
           <li class="menu-item disabled">View</li>
@@ -27,7 +28,7 @@ export function getNotepadWindowHTML(windowId, title, content) {
   `;
 }
 
-export function generateNotepadContent(title) {
+export function generateNotepadContent(windowId, title) {
   return `
     <div class="file-content notepad-style">
       <pre contenteditable="true" class="notepad-text">This is the content of ${title}. 
@@ -95,6 +96,7 @@ const notepadStyles = `
   }
 `;
 
+// Add styles to document
 const style = document.createElement('style');
 style.textContent = notepadStyles;
 document.head.appendChild(style);

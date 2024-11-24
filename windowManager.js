@@ -3,6 +3,7 @@ import { kennelStructure, menuMap } from "./kennelStructure.js";
 import { router } from "./router.js";
 import { getFolderWindowHTML, generateFolderView, setupFolderListeners } from "./folderWindow.js";
 import { getNotepadWindowHTML, generateNotepadContent, setupNotepadListeners } from "./notepadWindow.js";
+import { getProfileWindowHTML, generateProfileContent } from "./profileWindow.js";
 
 export class WindowManager {
   constructor(windowId, key, fullPath = null) {
@@ -146,18 +147,23 @@ export class WindowManager {
       .join("");
   }
 
-  createWindow(title, content) {
-    const desktop = document.querySelector(".desktop");
-    let windowHTML;
+  // createWindow method
+createWindow(title, content) {
+  const desktop = document.querySelector(".desktop");
+  let windowHTML;
 
-    if (this.itemData.type === "file") {
-      windowHTML = getNotepadWindowHTML(this.windowId, title, content);
+  if (this.itemData.type === "file") {
+    if (this.currentPath.includes('packOfPaws')) {
+      windowHTML = getProfileWindowHTML(this.windowId, title, content);
     } else {
-      windowHTML = getFolderWindowHTML(this.windowId, title, this.generatePathFromStructure(), content);
+      windowHTML = getNotepadWindowHTML(this.windowId, title, content);
     }
-
-    desktop.insertAdjacentHTML("beforeend", windowHTML);
+  } else {
+    windowHTML = getFolderWindowHTML(this.windowId, title, this.generatePathFromStructure(), content);
   }
+
+  desktop.insertAdjacentHTML("beforeend", windowHTML);
+}
 
   setupWindow() {
     // Set initial position and dimensions
@@ -302,7 +308,10 @@ export class WindowManager {
 
   generateContent(item = this.itemData) {
     if (item.type === "file") {
-      return generateNotepadContent(item.title);
+      if (this.currentPath.includes('packOfPaws')) {
+        return generateProfileContent(this.windowId, item.title, this.currentPath);
+      }
+      return generateNotepadContent(this.windowId, item.title, this.currentPath);
     } else if (item.children) {
       return generateFolderView(item.children);
     }

@@ -49,7 +49,7 @@ export const kennelStructure = {
         icon: "📁",
         type: "folder",
         children: {
-          dogA: { title: "Dog A", icon: "📄", type: "file" },
+          example: { title: "Example", icon: "📄", type: "file" },
           dogB: { title: "Dog B", icon: "📄", type: "file" },
         },
       },

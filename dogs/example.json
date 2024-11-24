@@ -1,0 +1,23 @@
+{
+  "name": "Dog Name",
+  "breed": "Breed Name",
+  "dateOfBirth": "YYYY-MM-DD",
+  "registration": "KC123456789",
+  "color": "Black and Tan",
+  "weight": 25,
+  "height": 60,
+  "healthTests": ["Hip Score: 5/5", "Elbow Score: 0/0"],
+  "vaccinationsUpToDate": true,
+  "showResults": [
+    {
+      "show": "National Championship 2023",
+      "achievement": "Best of Breed"
+    }
+  ],
+  "dnaTests": ["vWD Clear", "DM Clear"],
+  "breeding": {
+    "available": true,
+    "previousLitters": 2
+  },
+  "description": "Detailed description of the dog..."
+}
