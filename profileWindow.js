@@ -21,31 +21,81 @@ export function getProfileWindowHTML(windowId, title, content) {
           <li class="menu-item disabled">Help</li>
         </ul>
       </div>
-      <div class="card-body">
+      <div class="card-body-profile">
         ${content}
       </div>
     </div>
   `;
 }
 
+function setupTabHandlers(container) {
+  const menu = container.querySelector('menu[role="tablist"]');
+  if (!menu) return;
+
+  const tabs = menu.querySelectorAll('button');
+  const articles = container.querySelectorAll('article[role="tabpanel"]');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Deselect all tabs
+      tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+      
+      // Hide all panels
+      articles.forEach(article => article.hidden = true);
+      
+      // Select clicked tab
+      tab.setAttribute('aria-selected', 'true');
+      
+      // Show corresponding panel
+      const panelId = tab.getAttribute('aria-controls');
+      const panel = container.querySelector(`#${panelId}`);
+      if (panel) panel.hidden = false;
+    });
+  });
+
+  // Show first tab by default
+  if (tabs[0] && articles[0]) {
+    tabs[0].setAttribute('aria-selected', 'true');
+    articles[0].hidden = false;
+  }
+}
+
+function setupButtonListeners(container, windowId) {
+  const okButton = container.querySelector('button:not([aria-controls])');
+  if (okButton) {
+    okButton.addEventListener('click', () => {
+      // Find and close the window
+      const windowElement = document.getElementById(windowId);
+      if (windowElement) {
+        // Find the close button and click it
+        const closeButton = windowElement.querySelector('[data-action="close"]');
+        if (closeButton) {
+          closeButton.click();
+        }
+      }
+    });
+  }
+}
+
 export function generateProfileContent(windowId, title, path = '') {
   const pathParts = path.split('.');
   const dogName = pathParts[pathParts.length - 1];
   
-  // Return initial loading state
   const loadingContent = `
     <div class="file-content profile-style" data-dog-profile="${dogName}">
       ${generateLoadingHTML(windowId)}
     </div>
   `;
   
-  // Use setTimeout to allow the window to be created first
   setTimeout(() => {
     fetchDogProfile(dogName)
       .then(dogData => {
         const container = document.querySelector(`[data-dog-profile="${dogName}"]`);
         if (container) {
           container.innerHTML = generateDogProfileHTML(dogData, windowId);
+          setupTabHandlers(container);
+          // Add button listeners
+          setupButtonListeners(container, windowId);
         }
       })
       .catch(error => {
@@ -154,7 +204,6 @@ function generateDogProfileHTML(dogData, windowId) {
 
       <section class="field-row" style="justify-content: flex-end; margin-top: 10px;">
         <button>OK</button>
-        <button>Cancel</button>
       </section>
     </div>
   `;
@@ -288,6 +337,14 @@ const profileStyles = `
 
   .text-center {
     text-align: center;
+  }
+
+  article[role="tabpanel"] {
+    display: block;
+  }
+
+  article[role="tabpanel"][hidden] {
+    display: none;
   }
 `;
 
